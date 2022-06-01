@@ -34,7 +34,7 @@ public:
 void Symbol::decrypt(const std::string &encrypted)
 {
 
-    std::unordered_map<Key, std::vector<Key>, key_hash> first_h_keys;
+    std::unordered_map<Key, std::vector<Key>, key_hash> tb_hash_keys;
     std::vector<Key> temp_keys;
     Key encryp = Key(encrypted);
     Key counter;
@@ -43,27 +43,27 @@ void Symbol::decrypt(const std::string &encrypted)
     {
         Key subset = counter.subset_sum(T);
 
-        if (first_h_keys.count(subset) == 1)
+        if (tb_hash_keys.count(subset) == 1)
         {
-            first_h_keys[subset].push_back(counter);
+            tb_hash_keys[subset].push_back(counter);
         }
         else
         {
             std::vector<Key> temp = {counter};
-            first_h_keys.insert(make_pair(subset, temp));
+            tb_hash_keys.insert(make_pair(subset, temp));
         }
         counter++;
     }
 
-    Key max_first_half = counter;
+    Key fi_half = counter;
     Key check;
     bool f = false;
-    if (first_h_keys.count(encrypted) == 1)
+    if (tb_hash_keys.count(encrypted) == 1)
     {
-        for (unsigned int i = 0; i < first_h_keys[encrypted].size(); ++i)
+        for (unsigned int i = 0; i < tb_hash_keys[encrypted].size(); ++i)
         {
-            check = first_h_keys[encrypted][i];
-            std::cout << first_h_keys[encrypted][i] << std::endl;
+            check = tb_hash_keys[encrypted][i];
+            std::cout << tb_hash_keys[encrypted][i] << std::endl;
             f = true;
         }
     }
@@ -74,14 +74,14 @@ void Symbol::decrypt(const std::string &encrypted)
         {
             Key temp = encryp - counter.subset_sum(T);
 
-            if (first_h_keys.count(temp) == 1)
+            if (tb_hash_keys.count(temp) == 1)
             {
-                for (unsigned int i = 0; i < first_h_keys[temp].size(); ++i)
+                for (unsigned int i = 0; i < tb_hash_keys[temp].size(); ++i)
                 {
-                    std::cout << counter + first_h_keys[temp][i] << std::endl;
+                    std::cout << counter + tb_hash_keys[temp][i] << std::endl;
                 }
             }
-            counter = counter + max_first_half;
+            counter = counter + fi_half;
         }
 }
 

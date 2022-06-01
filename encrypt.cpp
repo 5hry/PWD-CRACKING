@@ -15,7 +15,7 @@ int main()
     std::cin >> password;
     Key passkey((std::string(password)));
 
-    std::fstream input("input.txt");
+    std::fstream input("gentb" + std::to_string(password.size()) + ".txt");
     for (i = 0; i < N; i++)
     {
         std::getline(input, buffer);

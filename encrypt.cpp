@@ -9,7 +9,7 @@ int main()
 {
     int i;
     std::string buffer;
-    std::vector<Key> T(N); // the table T
+    std::vector<Key> T(N); // the table key T
     Key ssum;
 
     std::cin >> password;

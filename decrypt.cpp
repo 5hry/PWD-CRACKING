@@ -7,7 +7,7 @@ Symbol::Symbol(const std::string &filename)
 {
     T.resize(N);
     std::string buffer;
-    std::fstream input(filename.c_str() /* , std::ios::in */);
+    std::fstream input(filename.c_str());
     for (int i = 0; i < N; i++)
     {
         std::getline(input, buffer);

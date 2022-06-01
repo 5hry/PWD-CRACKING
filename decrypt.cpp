@@ -3,11 +3,15 @@
 #include "symbol.hpp"
 #include "timer.hpp"
 
+// std::string me;
+// std::string encrypted;
+// std::string table_filename;
+
 Symbol::Symbol(const std::string &filename)
 {
     T.resize(N);
     std::string buffer;
-    std::fstream input(filename.c_str());
+    std::fstream input(filename.c_str() /* , std::ios::in */);
     for (int i = 0; i < N; i++)
     {
         std::getline(input, buffer);
@@ -34,7 +38,7 @@ public:
 void Symbol::decrypt(const std::string &encrypted)
 {
 
-    std::unordered_map<Key, std::vector<Key>, key_hash> tb_hash_keys;
+    std::unordered_map<Key, std::vector<Key>, key_hash> first_h_keys;
     std::vector<Key> temp_keys;
     Key encryp = Key(encrypted);
     Key counter;
@@ -43,27 +47,27 @@ void Symbol::decrypt(const std::string &encrypted)
     {
         Key subset = counter.subset_sum(T);
 
-        if (tb_hash_keys.count(subset) == 1)
+        if (first_h_keys.count(subset) == 1)
         {
-            tb_hash_keys[subset].push_back(counter);
+            first_h_keys[subset].push_back(counter);
         }
         else
         {
             std::vector<Key> temp = {counter};
-            tb_hash_keys.insert(make_pair(subset, temp));
+            first_h_keys.insert(make_pair(subset, temp));
         }
         counter++;
     }
 
-    Key fi_half = counter;
+    Key max_first_half = counter;
     Key check;
     bool f = false;
-    if (tb_hash_keys.count(encrypted) == 1)
+    if (first_h_keys.count(encrypted) == 1)
     {
-        for (unsigned int i = 0; i < tb_hash_keys[encrypted].size(); ++i)
+        for (unsigned int i = 0; i < first_h_keys[encrypted].size(); ++i)
         {
-            check = tb_hash_keys[encrypted][i];
-            std::cout << tb_hash_keys[encrypted][i] << std::endl;
+            check = first_h_keys[encrypted][i];
+            std::cout << first_h_keys[encrypted][i] << std::endl;
             f = true;
         }
     }
@@ -74,14 +78,15 @@ void Symbol::decrypt(const std::string &encrypted)
         {
             Key temp = encryp - counter.subset_sum(T);
 
-            if (tb_hash_keys.count(temp) == 1)
+            if (first_h_keys.count(temp) == 1)
             {
-                for (unsigned int i = 0; i < tb_hash_keys[temp].size(); ++i)
+                for (unsigned int i = 0; i < first_h_keys[temp].size(); ++i)
                 {
-                    std::cout << counter + tb_hash_keys[temp][i] << std::endl;
+                    // std::cout << first_h_keys[temp].size() <<"\n";
+                    std::cout << counter + first_h_keys[temp][i] << std::endl;
                 }
             }
-            counter = counter + fi_half;
+            counter = counter + max_first_half;
         }
 }
 
@@ -92,11 +97,12 @@ int main()
 
     TIMEUSE ti;
     ti.st();
-    Symbol b("gentb" + std::to_string(encrypted.size()) + ".txt");
+    Symbol b("input.txt");
 
     b.decrypt(encrypted);
     ti.fi();
     std::cout << "\n";
     std::cout << ti.time_use();
+    // a.show();
     return 0;
 }

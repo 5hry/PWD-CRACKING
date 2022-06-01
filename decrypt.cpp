@@ -3,19 +3,15 @@
 #include "symbol.hpp"
 #include "timer.hpp"
 
-// std::string me;
-// std::string encrypted;
-// std::string table_filename;
-
 Symbol::Symbol(const std::string &filename)
 {
     T.resize(N);
-    std::string buffer;
-    std::fstream input(filename.c_str() /* , std::ios::in */);
+    std::string cipher;
+    std::fstream input(filename.c_str());
     for (int i = 0; i < N; i++)
     {
-        std::getline(input, buffer);
-        T[i].set_string(buffer);
+        std::getline(input, cipher);
+        T[i].set_string(cipher);
     }
     input.close();
 }
@@ -82,7 +78,6 @@ void Symbol::decrypt(const std::string &encrypted)
             {
                 for (unsigned int i = 0; i < first_h_keys[temp].size(); ++i)
                 {
-                    // std::cout << first_h_keys[temp].size() <<"\n";
                     std::cout << counter + first_h_keys[temp][i] << std::endl;
                 }
             }
@@ -97,12 +92,11 @@ int main()
 
     TIMEUSE ti;
     ti.st();
-    Symbol b("input.txt");
+    Symbol b("gentb" + std::to_string(encrypted.size()) + ".txt");
 
     b.decrypt(encrypted);
     ti.fi();
     std::cout << "\n";
     std::cout << ti.time_use();
-    // a.show();
     return 0;
 }

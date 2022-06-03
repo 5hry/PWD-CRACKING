@@ -87,7 +87,7 @@ int main()
 
     TIMEUSE ti;
     ti.st();
-    Symbol b("input.txt");
+    Symbol b(""gentb" + std::to_string(encrypted.size()) + ".txt"");
 
     b.decrypt(encrypted);
     ti.fi();

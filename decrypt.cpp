@@ -2,7 +2,6 @@
 #include "key.hpp"
 #include "timer.hpp"
 
-
 class Symbol
 {
 public:
@@ -13,12 +12,12 @@ public:
 Symbol::Symbol(const std::string &filename)
 {
     T.resize(N);
-    std::string buffer;
+    std::string temp;
     std::fstream input(filename.c_str());
     for (int i = 0; i < N; i++)
     {
-        std::getline(input, buffer);
-        T[i].set_string(buffer);
+        std::getline(input, temp);
+        T[i].set_string(temp);
     }
     input.close();
 }
@@ -41,7 +40,7 @@ public:
 void Symbol::decrypt(const std::string &encrypted)
 {
 
-    std::unordered_map<Key, std::vector<Key>, key_hash> first_h_keys;
+    std::unordered_map<Key, std::vector<Key>, key_hash> ri_keys;
     std::vector<Key> temp_keys;
     Key encryp = Key(encrypted);
     Key counter;
@@ -50,42 +49,41 @@ void Symbol::decrypt(const std::string &encrypted)
     {
         Key subset = counter.subset_sum(T);
 
-        if (first_h_keys.count(subset) == 1)
+        if (ri_keys.count(subset))
         {
-            first_h_keys[subset].push_back(counter);
+            ri_keys[subset].push_back(counter);
         }
         else
         {
             std::vector<Key> temp = {counter};
-            first_h_keys.insert(make_pair(subset, temp));
+            ri_keys.insert(make_pair(subset, temp));
         }
         counter++;
     }
 
-    Key max_first_half = counter;
-    if (first_h_keys.count(encrypted) == 1)
+    Key min_lf_keys = counter;
+    if (ri_keys.count(encrypted))
     {
-        for (unsigned int i = 0; i < first_h_keys[encrypted].size(); ++i)
+        for (unsigned int i = 0; i < ri_keys[encrypted].size(); ++i)
         {
-            std::cout << first_h_keys[encrypted][i] << std::endl;
+            std::cout << ri_keys[encrypted][i] << std::endl;
         }
     }
     Key zero;
 
-        while (counter != zero)
-        {
-            Key temp = encryp - counter.subset_sum(T);
+    while (counter != zero)
+    {
+        Key temp = encryp - counter.subset_sum(T);
 
-            if (first_h_keys.count(temp) == 1)
+        if (ri_keys.count(temp))
+        {
+            for (unsigned int i = 0; i < ri_keys[temp].size(); ++i)
             {
-                for (unsigned int i = 0; i < first_h_keys[temp].size(); ++i)
-                {
-                    // std::cout << first_h_keys[temp].size() <<"\n";
-                    std::cout << counter + first_h_keys[temp][i] << std::endl;
-                }
+                std::cout << counter + ri_keys[temp][i] << std::endl;
             }
-            counter = counter + max_first_half;
         }
+        counter = counter + min_lf_keys;
+    }
 }
 
 int main()
@@ -95,7 +93,7 @@ int main()
 
     TIMEUSE ti;
     ti.st();
-    Symbol b(""gentb" + std::to_string(encrypted.size()) + ".txt"");
+    Symbol b("gentb" + std::to_string(encrypted.size()) + ".txt");
 
     b.decrypt(encrypted);
     ti.fi();

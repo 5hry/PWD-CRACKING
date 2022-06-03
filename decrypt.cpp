@@ -64,7 +64,7 @@ void Symbol::decrypt(const std::string &encrypted)
     Key min_lf_keys = counter;
     if (ri_keys.count(encrypted))
     {
-        for (unsigned int i = 0; i < ri_keys[encrypted].size(); ++i)
+        for ( int i = 0; i < ri_keys[encrypted].size(); ++i)
         {
             std::cout << ri_keys[encrypted][i] << std::endl;
         }
@@ -77,7 +77,7 @@ void Symbol::decrypt(const std::string &encrypted)
 
         if (ri_keys.count(temp))
         {
-            for (unsigned int i = 0; i < ri_keys[temp].size(); ++i)
+            for ( int i = 0; i < ri_keys[temp].size(); ++i)
             {
                 std::cout << counter + ri_keys[temp][i] << std::endl;
             }

@@ -1,7 +1,15 @@
 #include <bits/stdc++.h>
 #include "key.hpp"
-#include "symbol.hpp"
 #include "timer.hpp"
+
+
+class Symbol
+{
+public:
+    std::vector<Key> T;
+    Symbol(const std::string &);
+    void decrypt(const std::string &);
+};
 Symbol::Symbol(const std::string &filename)
 {
     T.resize(N);

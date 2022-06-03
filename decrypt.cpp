@@ -60,20 +60,15 @@ void Symbol::decrypt(const std::string &encrypted)
     }
 
     Key max_first_half = counter;
-    Key check;
-    bool f = false;
     if (first_h_keys.count(encrypted) == 1)
     {
         for (unsigned int i = 0; i < first_h_keys[encrypted].size(); ++i)
         {
-            check = first_h_keys[encrypted][i];
             std::cout << first_h_keys[encrypted][i] << std::endl;
-            f = true;
         }
     }
     Key zero;
 
-    if ((check == zero && !f))
         while (counter != zero)
         {
             Key temp = encryp - counter.subset_sum(T);

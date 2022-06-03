@@ -8,7 +8,7 @@ std::string password;
 int main()
 {
     int i;
-    std::string buffer;
+    std::string temp;
     std::vector<Key> T(N); // the table T
     Key ssum;
 
@@ -18,8 +18,8 @@ int main()
     std::fstream input("gentb" + std::to_string(password.size()) + ".txt");
     for (i = 0; i < N; i++)
     {
-        std::getline(input, buffer);
-        T[i].set_string(buffer);
+        std::getline(input, temp);
+        T[i].set_string(temp);
     }
     input.close();
 

@@ -1,7 +1,7 @@
 #include <bits/stdc++.h>
 #include "key.hpp"
 #include "symbol.hpp"
-#include "timer.hpp"]
+#include "timer.hpp"
 Symbol::Symbol(const std::string &filename)
 {
     T.resize(N);

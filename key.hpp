@@ -190,12 +190,6 @@ std::ostream &operator<<(std::ostream &os, const Key &k)
 {
     for (auto i : k.m_digit)
         os << ALPHABET[i];
-    // os << "  ";
-    // for (int i : k.m_digit)
-    //    os << setw(2) << i << " ";
-    // os << "  ";
-    // for (int i{0}; i < N; i++)
-    //    os << k.bit(i);
 
     return os;
 }
@@ -204,14 +198,6 @@ void Key::show() const
 {
     std::for_each(m_digit.begin(), m_digit.end(), [](const char &c)
                   { std::cout << ALPHABET[c]; });
-    std::cout << "  ";
-    std::for_each(m_digit.begin(), m_digit.end(), [](const char &c)
-                  { std::cout << std::setw(2) << static_cast<int>(c) << ' '; });
-    std::cout << "  ";
-    // for (int i = 0; i < N; ++i)
-    // {
-    //     // std::cout << bit(i) << std::flush;
-    // }
     std::cout << '\n';
 }
 

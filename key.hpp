@@ -168,13 +168,14 @@ Key operator-(const Key &lhs, const Key &rhs)
         }
         else
             carry = 0;
-    }
-    
         if (c.m_digit[i] == R)
         {
             carry += 1;
             c.m_digit[i] = 0;
         }
+    }
+    
+        
 
     return c;
 }

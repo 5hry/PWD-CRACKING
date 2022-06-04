@@ -2,12 +2,12 @@
 #define KEY_HPP
 #include <bits/stdc++.h>
 
-static constexpr int B = 5;  
-static constexpr int R = 32; 
+constexpr int B = 5;  
+constexpr int R = 32; 
 
 
-static constexpr int C = 10; // we can change depend on password's length or encrypted password's length
-static constexpr int N = 50; // = 5*C
+constexpr int C = 10; // we can change depend on password's length or encrypted password's length
+constexpr int N = 50; // = 5*C
 
 #define ALPHABET "abcdefghijklmnopqrstuvwxyz012345"
 typedef std::array<char, C> word_type;

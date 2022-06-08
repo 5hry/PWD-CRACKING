@@ -1,5 +1,5 @@
 /-----------------TABLE TIME-------------------\
-|        pwd length  --  time average         |
+|        pwd length  --  time average          |
 |            8               5s                |
 |            9              180s               |
 |            10             300s               |
